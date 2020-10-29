@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <properties resource="generator/config.properties"/>
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <!--mybatis自动识别数据库关键字,默认false-->
+        <property name="autoDelimitKeywords" value="true"/>
+        <!--可以使用``包括字段名，避免字段名与sql保留字冲突报错-->
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+        <property name="useMapperCommentGenerator" value="false"/>
+        <property name="lombok" value="Getter,Setter,ToString,Accessors"/>
+
+        <!-- 自动生成toString方法 -->
+<!--        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>-->
+        <!-- 自动生成equals方法和hashcode方法 -->
+<!--        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>-->
+        <!--不重复生成xml中内容-->
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"/>
+        <!-- 非官方插件 https://github.com/itfsw/mybatis-generator-plugin -->
+        <!-- 查询单条数据插件 -->
+<!--        <plugin type="com.itfsw.mybatis.generator.plugins.SelectOneByExamplePlugin"/>-->
+        <!-- 查询结果选择性返回插件 -->
+<!--        <plugin type="com.itfsw.mybatis.generator.plugins.SelectSelectivePlugin"/>-->
+        <!-- Example Criteria 增强插件 -->
+<!--        <plugin type="com.itfsw.mybatis.generator.plugins.ExampleEnhancedPlugin"/>-->
+        <!-- 数据Model属性对应Column获取插件 -->
+<!--        <plugin type="com.itfsw.mybatis.generator.plugins.ModelColumnPlugin"/>-->
+        <!-- 逻辑删除插件 -->
+<!--        <plugin type="com.itfsw.mybatis.generator.plugins.LogicalDeletePlugin">-->
+            <!-- 这里配置的是全局逻辑删除列和逻辑删除值，当然在table中配置的值会覆盖该全局配置 -->
+            <!-- 逻辑删除列类型只能为数字、字符串或者布尔类型 -->
+<!--            <property name="logicalDeleteColumn" value="deleted"/>-->
+            <!-- 逻辑删除-已删除值 -->
+<!--            <property name="logicalDeleteValue" value="1"/>-->
+            <!-- 逻辑删除-未删除值 -->
+<!--            <property name="logicalUnDeleteValue" value="0"/>-->
+<!--        </plugin>-->
+
+
+        <commentGenerator>
+            <!--该元素指定我们不希望将时间戳添加到任何生成的注释中：-->
+<!--            <property name="suppressDate" value="true"/>-->
+            <!--去掉注释：-->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <!--数据库连接信息-->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://rm-uf60cb427hat3ys25fo.mysql.rds.aliyuncs.com:3306/mall?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC&amp;verifyServerCertificate=false&amp;useSSL=false"
+                        userId="huidong"
+                        password="xhd!0707"/>
+<!--        <jdbcConnection driverClass="${jdbc.driverClass}"-->
+<!--                        connectionURL="${jdbc.url}"-->
+<!--                        userId="${jdbc.username}"-->
+<!--                        password="${jdbc.password}"/>-->
+
+
+        <!--此属性用于指定MyBatis Generator是否应将DECIMAL和NUMERIC字段强制使用java.math.BigDecimal，而不是在可能的情况下替换整数类型-->
+            <javaTypeResolver>
+                <property name="forceBigDecimal" value="false"/>
+            </javaTypeResolver>
+        <!--此属性用于指定MyBatis Generator是否应对DATE，TIME和TIMESTAMP字段强制使用JSR-310数据类型，而不是使用java.util.Date。-->
+<!--        <javaTypeResolver>-->
+<!--            <property name="useJSR310Types" value="true"/>-->
+<!--        </javaTypeResolver>-->
+
+        <!--生成-->
+        <javaModelGenerator targetPackage="com.huidong.mall.pojo" targetProject="src/main/java">
+            <!--在targetProject的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认false -->
+            <property name="enableSubpackages" value="true"/>
+            <!--设置是否在getter方法中，对string类型字段调用trim()方法,因为我们将使用lombok的@data注解，所以这里的设置将不需要！！！！ -->
+<!--            <property name="trimStrings" value="true"/>-->
+        </javaModelGenerator>
+        <sqlMapGenerator targetPackage="mappers" targetProject="src/main/resources">
+            <property name="enableSubpackages" value="true"/>
+        </sqlMapGenerator>
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.huidong.mall.dao" targetProject="src/main/java">
+            <property name="enableSubpackages" value="true"/>
+        </javaClientGenerator>
+        <!--表名-->
+        <table tableName="mall_order" domainObjectName="Order" enableCountByExample="false" enableDeleteByExample="false" enableUpdateByExample="false" enableSelectByExample="false"></table>
+        <table tableName="mall_order_item" domainObjectName="OrderItem" enableCountByExample="false" enableDeleteByExample="false" enableUpdateByExample="false" enableSelectByExample="false"></table>
+    </context>
+</generatorConfiguration>
